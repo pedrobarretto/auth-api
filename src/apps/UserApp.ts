@@ -35,9 +35,13 @@ class UserApp {
     return { ...user, id: newUser.id };
   }
 
-  private async findByEmail(email: string): Promise<IUserModel> {
+  async findByEmail(email: string): Promise<IUserModel> {
     const user = await UserModel.findOne({ email });
-    console.debug(user);
+    return user as IUserModel;
+  }
+
+  async findById(userId: string): Promise<IUserModel> {
+    const user = await UserModel.findOne({ id: userId });
     return user as IUserModel;
   }
 
@@ -52,6 +56,16 @@ class UserApp {
     const { token } = authApp.generateToken(user.id, user.role, user.email);
 
     return { isPasswordValid, userId: user.id, token };
+  }
+
+  async changePassword(id: string, newPassword: string): Promise<void> {
+    const hashedPassword = await authApp.hashPassword(newPassword);
+
+    await UserModel.findOneAndUpdate(
+      { id },
+      { password: hashedPassword },
+      { new: true }
+    );
   }
 }
 
