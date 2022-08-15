@@ -44,7 +44,7 @@ export async function checkLoginCredentials(
   console.debug('[checkLoginCredentials] >> Checking if password is valid');
 
   if (!isPasswordValid) {
-    console.debug('[checkLoginCredentials] >> Email or password is wrong');
+    console.error('[checkLoginCredentials] >> Email or password is wrong');
     return res
       .status(404)
       .json({ error: 'email-or-password-wrong', status: 404 });
