@@ -1,7 +1,6 @@
 import { Router, Request, Response } from 'express';
 
 import { userApp } from '../apps/UserApp';
-import { CheckIfUserIsLoggedIn } from '../middlewares/AuthMiddleware';
 import {
   checkUserCredentials,
   checkLoginCredentials,
